@@ -1,10 +1,12 @@
 /**
  * Global types and enums to control the purchases
  */
+
 type Crypt = "1" | "2" | "3" | "4" | "5" | "6" | "7";
 type PaymentIndicator = "C" | "R" | "V" | "U" | "Z";
 type PaymentInformation = "0" | "1";
 type CvdIndicator = "0" | "1" | "2" | "9";
+
 // make a global interface with all available values
 interface Properties {
     // purchase
@@ -32,60 +34,68 @@ interface Properties {
     note: string;
     duration: string; // only applies to temporary storage of credentials in the vault
 }
+
 export enum TransactionActions {
     // vault saving data
-    VaultAdd,
-    VaultUpdate,
-    VaultRemove,
-    VaultLookup,
-    VaultTemp,
-    VaultSaveTemp,
-    VaultIsCorporate,
-    VaultGetExpiring,
-    VaultIndependentRefund,
+    VaultAdd = "res_cc_add",
+    VaultUpdate = "res_cc_update",
+    VaultRemove = "res_delete",
+    VaultLookup = "res_lookup_masked",
+    VaultTemp = "res_temp_add",
+    VaultSaveTemp = "res_add_token",
+    VaultIsCorporate = "res_is_corporatecard",
+    VaultGetExpiring = "res_get_expiring",
+    VaultIndependentRefund = "res_ind_refund_cc",
+    VaultTokenize = "res_tokenize_cc",
     // transactions without vault
-    Purchase,
-    PreAuth,
-    PreAuthCompletion,
-    Verification,
-    IndependentRefund,
+    Purchase = "purchase",
+    PreAuth = "preauth",
+    PreAuthCompletion = "completion",
+    Verification = "verification",
+    IndependentRefund = "independent_refund",
     // vault transactions
-    VaultPurchase,
-    VaultPreAuth,
-    VaultVerification,
+    VaultPurchase = "res_purchase_cc",
+    VaultPreAuth = "res_preauth_cc",
+    VaultVerification = "res_card_verification_cc",
     // non-credential transactions
-    Correction,
-    Refund,
-    BatchClose,
-    OpenTotals,
+    Correction = "purchase_correction",
+    Refund = "refund",
+    BatchClose = "batch_close",
+    OpenTotals = "open_totals",
 }
+
 // required for all transactions regardless of type
 export interface GlobalTransaction {
     api: string;
-    storeId: string;
+    store: string;
     statusCheck?: boolean;
 }
+
 // config that is to be set once for the application
 export type Config = {
     testMode?: boolean;
-} & Pick<GlobalTransaction, "api" | "storeId">;
+} & Pick<GlobalTransaction, "api" | "store">;
+
 // avs specifics
 export interface AVS {
     streetNumber: string;
     streetName: string;
     zipCode: string;
 }
+
 // this is for the three numbers on the back
 export interface CVD {
     cvdIndicator: CvdIndicator;
     cvdValue: string;
 }
+
 // credential on file -> needed for converting to vault
 export interface COF {
     paymentIndicator: PaymentIndicator;
     paymentInformation: PaymentInformation;
     issuerId: string;
 }
+
 // vault add transaction type
 export type VaultAdd = { type: TransactionActions.VaultAdd } & Pick<
     Properties,
@@ -104,6 +114,7 @@ export type VaultAdd = { type: TransactionActions.VaultAdd } & Pick<
             | "cof"
         >
     >;
+
 // vault update credential type
 export type VaultUpdate = { type: TransactionActions.VaultUpdate } & Pick<
     Properties,
@@ -123,21 +134,25 @@ export type VaultUpdate = { type: TransactionActions.VaultUpdate } & Pick<
             | "avs"
         >
     >;
+
 // vault remove credentials
-export type VaultARemove = { type: TransactionActions.VaultRemove } & Pick<
+export type VaultRemove = { type: TransactionActions.VaultRemove } & Pick<
     Properties,
     "key"
 >;
+
 // vault lookup credentials type
 export type VaultLookup = { type: TransactionActions.VaultLookup } & Pick<
     Properties,
     "key"
 >;
+
 // vault temporary credentials
 export type VaultTemp = { type: TransactionActions.VaultTemp } & Pick<
     Properties,
     "pan" | "expiry" | "crypt" | "duration"
 >;
+
 // vault save temporary credentials
 export type VaultSaveTemp = { type: TransactionActions.VaultSaveTemp } & Pick<
     Properties,
@@ -149,17 +164,20 @@ export type VaultSaveTemp = { type: TransactionActions.VaultSaveTemp } & Pick<
             "customerId" | "email" | "phone" | "note" | "avs" | "cof"
         >
     >;
+
 // check if vault card is a corporate card
 export type VaultIsCorporate = {
     type: TransactionActions.VaultIsCorporate;
 } & Pick<Properties, "key">;
+
 // get vault cards that are expiring
 export type VaultGetExpiring = {
-    type: TransactionActions.VaultIsCorporate;
+    type: TransactionActions.VaultGetExpiring;
     // note that there is nothing required to be sent to get the expiring cards.
     // TODO This returns a really weird object with the expiring fields
     // will need to be properly parsed (UGH) and made into an array prior to returning
 };
+
 // ordinary one off purchase
 export type Purchase = { type: TransactionActions.Purchase } & Pick<
     Properties,
@@ -171,6 +189,7 @@ export type Purchase = { type: TransactionActions.Purchase } & Pick<
             "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "descriptor"
         >
     >;
+
 // pre auth purchase
 export type PreAuth = { type: TransactionActions.PreAuth } & Pick<
     Properties,
@@ -182,16 +201,19 @@ export type PreAuth = { type: TransactionActions.PreAuth } & Pick<
             "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "descriptor"
         >
     >;
+
 // pre auth completion
 export type PreAuthCompletion = {
     type: TransactionActions.PreAuthCompletion;
 } & Pick<Properties, "orderId" | "amount" | "transactionNumber" | "crypt"> &
     Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
+
 // verification
 export type Verification = {
     type: TransactionActions.Verification;
 } & Pick<Properties, "pan" | "expiry" | "amount" | "crypt" | "orderId"> &
     Partial<Pick<Properties, "avs" | "cvd" | "cof">>;
+
 // vault purchase
 export type VaultPurchase = {
     type: TransactionActions.VaultPurchase;
@@ -202,6 +224,7 @@ export type VaultPurchase = {
             "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "descriptor"
         >
     >;
+
 // vault pre auth
 export type VaultPreAuth = {
     type: TransactionActions.VaultPreAuth;
@@ -212,21 +235,42 @@ export type VaultPreAuth = {
             "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "descriptor"
         >
     >;
+
 // vault card verification
 export type VaultVerification = {
     type: TransactionActions.VaultVerification;
 } & Pick<Properties, "key" | "orderId" | "crypt" | "expiry"> &
     Partial<Pick<Properties, "avs" | "cvd" | "cof">>;
+
 // vault independent refund
 export type VaultIndependentRefund = {
     type: TransactionActions.VaultIndependentRefund;
 } & Pick<Properties, "key" | "orderId" | "crypt" | "amount"> &
     Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
+
+// vault add previous card used to vault
+export type VaultTokenize = {
+    type: TransactionActions.VaultTokenize;
+} & Pick<Properties, "orderId" | "transactionNumber"> &
+    Partial<
+        Pick<
+            Properties,
+            | "customerId"
+            | "keyFormat"
+            | "email"
+            | "phone"
+            | "note"
+            | "avs"
+            | "cof"
+        >
+    >;
+
 // correction
 export type Correction = {
     type: TransactionActions.Correction;
 } & Pick<Properties, "orderId" | "transactionNumber" | "crypt"> &
     Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
+
 // refund
 export type Refund = {
     type: TransactionActions.Refund;
@@ -251,3 +295,28 @@ export type BatchClose = { type: TransactionActions.BatchClose } & Pick<
     "ecr"
 > &
     Partial<Pick<Properties, "statusCheck">>;
+
+// unify all transaction types into a singular type
+export type TransactionTypes =
+    | VaultAdd
+    | VaultUpdate
+    | VaultRemove
+    | VaultLookup
+    | VaultTemp
+    | VaultSaveTemp
+    | VaultIsCorporate
+    | VaultGetExpiring
+    | VaultIndependentRefund
+    | Purchase
+    | PreAuth
+    | PreAuthCompletion
+    | Verification
+    | IndependentRefund
+    | VaultPurchase
+    | VaultPreAuth
+    | VaultVerification
+    | Correction
+    | Refund
+    | OpenTotals
+    | BatchClose
+    | VaultTokenize;

@@ -29,7 +29,8 @@
         "typescript": "^4.8.4"
     },
     "dependencies": {
-        "@snowytime/xmlify": "^1.1.6"
+        "@snowytime/xmlify": "^1.1.6",
+        "axios": "^1.0.0"
     },
     "files": [
         "dist"
