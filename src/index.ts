@@ -1,1 +1,1 @@
-export * from './monerize';
+export * from './monerize.js';

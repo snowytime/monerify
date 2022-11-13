@@ -44,8 +44,12 @@ export const monerize = (config: Config) => {
     // prepare the process constructor
     // purchase object
     const purchase = async (args: Omit<Purchase, "type">) => {
-        const response = await process({ type: TransactionActions.Purchase, ...args });
-        return response;
+        const { response } = await process({ type: TransactionActions.Purchase, ...args });
+        const receipt = response.receipt;
+        if (!receipt || !receipt.message.includes('APPROVED')) {
+            throw new Error(receipt.message);
+        };
+        return receipt;
     };
     // refund
     const refund = async (args: Omit<Refund, "type">) => {
