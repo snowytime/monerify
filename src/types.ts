@@ -11,10 +11,10 @@ type CvdIndicator = "0" | "1" | "2" | "9";
 interface Properties {
     // purchase
     pan: string;
-    expiry: string;
-    crypt: Crypt;
+    expdate: string;
+    crypt_type: Crypt;
     amount: string;
-    transactionNumber: string;
+    txn_number: string;
     key: string;
     orderId: string;
     keyFormat: string;
@@ -99,7 +99,7 @@ export interface COF {
 // vault add transaction type
 export type VaultAdd = { type: TransactionActions.VaultAdd } & Pick<
     Properties,
-    "pan" | "expiry" | "crypt"
+    "pan" | "expdate" | "crypt_type"
 > &
     Partial<
         Pick<
@@ -124,8 +124,8 @@ export type VaultUpdate = { type: TransactionActions.VaultUpdate } & Pick<
         Pick<
             Properties,
             | "pan"
-            | "crypt"
-            | "expiry"
+            | "crypt_type"
+            | "expdate"
             | "customerId"
             | "phone"
             | "email"
@@ -150,13 +150,13 @@ export type VaultLookup = { type: TransactionActions.VaultLookup } & Pick<
 // vault temporary credentials
 export type VaultTemp = { type: TransactionActions.VaultTemp } & Pick<
     Properties,
-    "pan" | "expiry" | "crypt" | "duration"
+    "pan" | "expdate" | "crypt_type" | "duration"
 >;
 
 // vault save temporary credentials
 export type VaultSaveTemp = { type: TransactionActions.VaultSaveTemp } & Pick<
     Properties,
-    "key" | "crypt" | "expiry"
+    "key" | "crypt_type" | "expdate"
 > &
     Partial<
         Pick<
@@ -181,7 +181,7 @@ export type VaultGetExpiring = {
 // ordinary one off purchase
 export type Purchase = { type: TransactionActions.Purchase } & Pick<
     Properties,
-    "pan" | "crypt" | "expiry" | "amount" | "orderId"
+    "pan" | "crypt_type" | "expdate" | "amount" | "orderId"
 > &
     Partial<
         Pick<
@@ -193,7 +193,7 @@ export type Purchase = { type: TransactionActions.Purchase } & Pick<
 // pre auth purchase
 export type PreAuth = { type: TransactionActions.PreAuth } & Pick<
     Properties,
-    "pan" | "crypt" | "expiry" | "amount" | "orderId"
+    "pan" | "crypt_type" | "expdate" | "amount" | "orderId"
 > &
     Partial<
         Pick<
@@ -205,19 +205,19 @@ export type PreAuth = { type: TransactionActions.PreAuth } & Pick<
 // pre auth completion
 export type PreAuthCompletion = {
     type: TransactionActions.PreAuthCompletion;
-} & Pick<Properties, "orderId" | "amount" | "transactionNumber" | "crypt"> &
+} & Pick<Properties, "orderId" | "amount" | "txn_number" | "crypt_type"> &
     Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
 
 // verification
 export type Verification = {
     type: TransactionActions.Verification;
-} & Pick<Properties, "pan" | "expiry" | "amount" | "crypt" | "orderId"> &
+} & Pick<Properties, "pan" | "expdate" | "amount" | "crypt_type" | "orderId"> &
     Partial<Pick<Properties, "avs" | "cvd" | "cof">>;
 
 // vault purchase
 export type VaultPurchase = {
     type: TransactionActions.VaultPurchase;
-} & Pick<Properties, "key" | "orderId" | "amount" | "crypt" | "expiry"> &
+} & Pick<Properties, "key" | "orderId" | "amount" | "crypt_type" | "expdate"> &
     Partial<
         Pick<
             Properties,
@@ -228,7 +228,7 @@ export type VaultPurchase = {
 // vault pre auth
 export type VaultPreAuth = {
     type: TransactionActions.VaultPreAuth;
-} & Pick<Properties, "key" | "orderId" | "amount" | "crypt" | "expiry"> &
+} & Pick<Properties, "key" | "orderId" | "amount" | "crypt_type" | "expdate"> &
     Partial<
         Pick<
             Properties,
@@ -239,19 +239,19 @@ export type VaultPreAuth = {
 // vault card verification
 export type VaultVerification = {
     type: TransactionActions.VaultVerification;
-} & Pick<Properties, "key" | "orderId" | "crypt" | "expiry"> &
+} & Pick<Properties, "key" | "orderId" | "crypt_type" | "expdate"> &
     Partial<Pick<Properties, "avs" | "cvd" | "cof">>;
 
 // vault independent refund
 export type VaultIndependentRefund = {
     type: TransactionActions.VaultIndependentRefund;
-} & Pick<Properties, "key" | "orderId" | "crypt" | "amount"> &
+} & Pick<Properties, "key" | "orderId" | "crypt_type" | "amount"> &
     Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
 
 // vault add previous card used to vault
 export type VaultTokenize = {
     type: TransactionActions.VaultTokenize;
-} & Pick<Properties, "orderId" | "transactionNumber"> &
+} & Pick<Properties, "orderId" | "txn_number"> &
     Partial<
         Pick<
             Properties,
@@ -268,19 +268,19 @@ export type VaultTokenize = {
 // correction
 export type Correction = {
     type: TransactionActions.Correction;
-} & Pick<Properties, "orderId" | "transactionNumber" | "crypt"> &
+} & Pick<Properties, "orderId" | "txn_number" | "crypt_type"> &
     Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
 
 // refund
 export type Refund = {
     type: TransactionActions.Refund;
-} & Pick<Properties, "orderId" | "amount" | "crypt" | "transactionNumber"> &
+} & Pick<Properties, "orderId" | "amount" | "crypt_type" | "txn_number"> &
     Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
 
 // refund
 export type IndependentRefund = {
     type: TransactionActions.IndependentRefund;
-} & Pick<Properties, "orderId" | "amount" | "pan" | "expiry" | "crypt"> &
+} & Pick<Properties, "orderId" | "amount" | "pan" | "expdate" | "crypt_type"> &
     Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
 
 // get all open totals
