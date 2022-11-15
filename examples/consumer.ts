@@ -5,8 +5,8 @@ async function handler() {
         const response = await monerize.purchase({
             pan: "4242424242424242",
             expdate: "1124",
-            orderId: "sudiw8si21112",
-            cvd: {
+            orderId: "sudiw8si211sd12312sd",
+            cvdInfo: {
                 cvdIndicator: '0',
                 cvdValue: '123'
             },

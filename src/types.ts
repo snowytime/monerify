@@ -27,7 +27,7 @@ interface Properties {
     // verification
     cof: COF;
     avs: AVS;
-    cvd: CVD;
+    cvdInfo: cvdInfo;
     // info
     email: string;
     phone: string;
@@ -84,7 +84,7 @@ export interface AVS {
 }
 
 // this is for the three numbers on the back
-export interface CVD {
+export interface cvdInfo {
     cvdIndicator: CvdIndicator;
     cvdValue: string;
 }
@@ -110,7 +110,7 @@ export type VaultAdd = { type: TransactionActions.VaultAdd } & Pick<
             | "phone"
             | "note"
             | "avs"
-            | "cvd"
+            | "cvdInfo"
             | "cof"
         >
     >;
@@ -186,7 +186,7 @@ export type Purchase = { type: TransactionActions.Purchase } & Pick<
     Partial<
         Pick<
             Properties,
-            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
+            "avs" | "cvdInfo" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
         >
     >;
 
@@ -198,7 +198,7 @@ export type PreAuth = { type: TransactionActions.PreAuth } & Pick<
     Partial<
         Pick<
             Properties,
-            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
+            "avs" | "cvdInfo" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
         >
     >;
 
@@ -212,7 +212,7 @@ export type PreAuthCompletion = {
 export type Verification = {
     type: TransactionActions.Verification;
 } & Pick<Properties, "pan" | "expdate" | "amount" | "crypt_type" | "orderId"> &
-    Partial<Pick<Properties, "avs" | "cvd" | "cof">>;
+    Partial<Pick<Properties, "avs" | "cvdInfo" | "cof">>;
 
 // vault purchase
 export type VaultPurchase = {
@@ -221,7 +221,7 @@ export type VaultPurchase = {
     Partial<
         Pick<
             Properties,
-            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
+            "avs" | "cvdInfo" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
         >
     >;
 
@@ -232,7 +232,7 @@ export type VaultPreAuth = {
     Partial<
         Pick<
             Properties,
-            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
+            "avs" | "cvdInfo" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
         >
     >;
 
@@ -240,7 +240,7 @@ export type VaultPreAuth = {
 export type VaultVerification = {
     type: TransactionActions.VaultVerification;
 } & Pick<Properties, "key" | "orderId" | "crypt_type" | "expdate"> &
-    Partial<Pick<Properties, "avs" | "cvd" | "cof">>;
+    Partial<Pick<Properties, "avs" | "cvdInfo" | "cof">>;
 
 // vault independent refund
 export type VaultIndependentRefund = {
