@@ -40,6 +40,7 @@ export const process_factory: any =
             },
             mutator: toSnakeCase,
         });
+        console.log(body)
         const url = `https://${
             testMode ? qa : prod
         }/gateway2/servlet/MpgRequest`;

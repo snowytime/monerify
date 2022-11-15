@@ -21,7 +21,7 @@ interface Properties {
     // optionals
     statusCheck: boolean;
     customerId: string;
-    descriptor: string;
+    dynamicDescriptor: string;
     // other
     ecr: string;
     // verification
@@ -186,7 +186,7 @@ export type Purchase = { type: TransactionActions.Purchase } & Pick<
     Partial<
         Pick<
             Properties,
-            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "descriptor"
+            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
         >
     >;
 
@@ -198,7 +198,7 @@ export type PreAuth = { type: TransactionActions.PreAuth } & Pick<
     Partial<
         Pick<
             Properties,
-            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "descriptor"
+            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
         >
     >;
 
@@ -206,7 +206,7 @@ export type PreAuth = { type: TransactionActions.PreAuth } & Pick<
 export type PreAuthCompletion = {
     type: TransactionActions.PreAuthCompletion;
 } & Pick<Properties, "orderId" | "amount" | "txn_number" | "crypt_type"> &
-    Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
+    Partial<Pick<Properties, "statusCheck" | "customerId" | "dynamicDescriptor">>;
 
 // verification
 export type Verification = {
@@ -221,7 +221,7 @@ export type VaultPurchase = {
     Partial<
         Pick<
             Properties,
-            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "descriptor"
+            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
         >
     >;
 
@@ -232,7 +232,7 @@ export type VaultPreAuth = {
     Partial<
         Pick<
             Properties,
-            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "descriptor"
+            "avs" | "cvd" | "cof" | "statusCheck" | "customerId" | "dynamicDescriptor"
         >
     >;
 
@@ -246,7 +246,7 @@ export type VaultVerification = {
 export type VaultIndependentRefund = {
     type: TransactionActions.VaultIndependentRefund;
 } & Pick<Properties, "key" | "orderId" | "crypt_type" | "amount"> &
-    Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
+    Partial<Pick<Properties, "statusCheck" | "customerId" | "dynamicDescriptor">>;
 
 // vault add previous card used to vault
 export type VaultTokenize = {
@@ -269,19 +269,19 @@ export type VaultTokenize = {
 export type Correction = {
     type: TransactionActions.Correction;
 } & Pick<Properties, "orderId" | "txn_number" | "crypt_type"> &
-    Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
+    Partial<Pick<Properties, "statusCheck" | "customerId" | "dynamicDescriptor">>;
 
 // refund
 export type Refund = {
     type: TransactionActions.Refund;
 } & Pick<Properties, "orderId" | "amount" | "crypt_type" | "txn_number"> &
-    Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
+    Partial<Pick<Properties, "statusCheck" | "customerId" | "dynamicDescriptor">>;
 
 // refund
 export type IndependentRefund = {
     type: TransactionActions.IndependentRefund;
 } & Pick<Properties, "orderId" | "amount" | "pan" | "expdate" | "crypt_type"> &
-    Partial<Pick<Properties, "statusCheck" | "customerId" | "descriptor">>;
+    Partial<Pick<Properties, "statusCheck" | "customerId" | "dynamicDescriptor">>;
 
 // get all open totals
 export type OpenTotals = { type: TransactionActions.OpenTotals } & Pick<
