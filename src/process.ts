@@ -44,7 +44,6 @@ export const process_factory: any =
             testMode ? qa : prod
         }/gateway2/servlet/MpgRequest`;
         const { data } = await axios.post(url, body);
-        console.log(data);
         return parser({ xml: data, mutator: toCamelCase });
     };
 
