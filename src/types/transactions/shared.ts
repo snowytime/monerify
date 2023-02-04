@@ -97,7 +97,13 @@ export interface GlobalProperties {
     customer: Customer;
     recurringCycle: RecurringCycle;
     dataKey: string;
+    test: string;
 }
+
+export type Map = {
+    required: Partial<keyof GlobalProperties>[];
+    optional: Partial<keyof GlobalProperties>[];
+};
 
 /* these are all the possible properties that can be returned */
 export interface GlobalResponse {

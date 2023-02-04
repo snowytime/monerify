@@ -30,10 +30,9 @@ export const parseArguments = ({ type, ...rest }: TransactionRequest) => {
         });
     }
     const allowedFields = [...fieldCategories.required, ...fieldCategories.optional];
-    type AllowedProperties = keyof (typeof allowedMap)[Transaction];
     const filteredObj = Object.fromEntries(
         Object.entries({ type, ...rest }).filter(([key]) => {
-            return allowedFields.includes(key as AllowedProperties);
+            return allowedFields.includes(key as keyof typeof rest);
         }),
     );
     return {

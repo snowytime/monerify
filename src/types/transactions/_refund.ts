@@ -12,7 +12,6 @@ export const preauthRules = {
         "cof",
         "walletIndicator",
         "customer",
-        "test",
     ],
 } as const;
 

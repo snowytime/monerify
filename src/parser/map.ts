@@ -3,7 +3,7 @@ import { Rules } from "../types/transactions/global.js";
 import { preauthRules } from "../types/transactions/preauth.js";
 import { purchaseRules } from "../types/transactions/purchase.js";
 
-export const allowedMap: { [key in Transaction]?: Rules } = {
+export const allowedMap = {
     // vault
     // [Transaction.VaultAdd]: {
     //     required: ["pan", "expdate", "cryptType"],
@@ -147,4 +147,4 @@ export const allowedMap: { [key in Transaction]?: Rules } = {
     //         "cof",
     //     ],
     // },
-};
+} as const;
