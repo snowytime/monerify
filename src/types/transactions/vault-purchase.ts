@@ -2,16 +2,16 @@ import { Transaction } from "../enums.js";
 import { BaseTransactionResponse, GlobalProperties, GlobalResponse } from "./shared.js";
 
 const rules = {
-    required: ["orderId", "amount", "pan", "cryptType", "expdate"],
+    required: ["orderId", "dataKey", "expdate", "cryptType"],
     optional: [
-        "dynamicDescriptor",
+        "avsInfo",
+        "cofInfo",
+        "cvdInfo",
+        "custInfo",
         "statusCheck",
         "custId",
-        "avsInfo",
-        "cvdInfo",
-        "cofInfo",
-        "walletIndicator",
-        "custInfo",
+        "dynamicDescriptor",
+        "recurringCycle",
     ],
 } as const;
 
@@ -22,11 +22,15 @@ type OptionalProperties = {
     [K in (typeof rules)["optional"][number]]?: GlobalProperties[K];
 };
 
-type Request = { type: Transaction.PreAuth } & RequiredProperties & OptionalProperties;
+type Request = { type: Transaction.VaultPurchase } & RequiredProperties & OptionalProperties;
 
-type Response = { type: Transaction.PreAuth } & BaseTransactionResponse &
+type Response = { type: Transaction.VaultPurchase } & BaseTransactionResponse &
     Partial<
         Pick<GlobalResponse, "cvdResultCode" | "avsResultCode" | "statusCode" | "statusMessage">
     >;
 
-export { Request as PreauthRequest, Response as PreauthResponse, rules as preauthRules };
+export {
+    rules as vaultPurchaseRules,
+    Request as VaultPurchaseRequest,
+    Response as VaultPurchaseResponse,
+};

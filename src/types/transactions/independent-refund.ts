@@ -3,17 +3,7 @@ import { BaseTransactionResponse, GlobalProperties, GlobalResponse } from "./sha
 
 const rules = {
     required: ["orderId", "amount", "pan", "expdate", "cryptType"],
-    optional: [
-        "statusCheck",
-        "custId",
-        "dynamicDescriptor",
-        "walletIndicator",
-        "avsInfo",
-        "cvdInfo",
-        "cofInfo",
-        "custInfo",
-        "recurringCycle",
-    ],
+    optional: ["statusCheck", "custId", "dynamicDescriptor"],
 } as const;
 
 type RequiredProperties = {
@@ -23,11 +13,15 @@ type OptionalProperties = {
     [K in (typeof rules)["optional"][number]]?: GlobalProperties[K];
 };
 
-type Request = { type: Transaction.Purchase } & RequiredProperties & OptionalProperties;
+type Request = { type: Transaction.IndependentRefund } & RequiredProperties & OptionalProperties;
 
-type Response = { type: Transaction.Purchase } & BaseTransactionResponse &
+type Response = { type: Transaction.IndependentRefund } & BaseTransactionResponse &
     Partial<
         Pick<GlobalResponse, "cvdResultCode" | "avsResultCode" | "statusCode" | "statusMessage">
     >;
 
-export { Request as PurchaseRequest, Response as PurchaseResponse, rules as purchaseRules };
+export {
+    rules as independentRefundRules,
+    Request as IndependentRefundRequest,
+    Response as IndependentRefundResponse,
+};

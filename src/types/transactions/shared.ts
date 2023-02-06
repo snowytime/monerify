@@ -6,10 +6,16 @@ import {
     Transaction,
 } from "../enums.js";
 
+export interface Config {
+    storeId?: string;
+    apiToken?: string;
+    mode?: "production" | "development";
+}
+
 export interface Avs {
-    streetNumber: string;
-    streetName: string;
-    zipCode: string;
+    avsStreetNumber: string;
+    avsStreetName: string;
+    avsZipCode: string;
 }
 
 export interface Cvd {
@@ -72,10 +78,10 @@ export interface Customer {
 
 export interface RecurringCycle {
     recurUnit: string;
-    startNow: string;
+    startNow: boolean;
     startDate: string;
-    numRecurs: string;
-    period: string;
+    numRecurs: number;
+    period: number;
     recurAmount: string;
 }
 
@@ -91,13 +97,27 @@ export interface GlobalProperties {
     custId: string;
     dynamicDescriptor: string;
     walletIndicator: string;
-    avs: Avs;
+    avsInfo: Avs;
     cvdInfo: Cvd;
-    cof: Cof;
-    customer: Customer;
+    cofInfo: Cof;
+    custInfo: Customer;
     recurringCycle: RecurringCycle;
     dataKey: string;
-    test: string;
+    txnNumber: string;
+    commcardInvoice: string;
+    commcardTaxAmount: string;
+    ecrNo: string;
+    recurAmount: string;
+    addNum: string;
+    totalNum: string;
+    issuerId: string;
+    hold: string;
+    terminate: string;
+    dataKeyFormat: string;
+    note: string;
+    phone: string;
+    email: string;
+    duration: string;
 }
 
 export type Map = {
@@ -130,6 +150,7 @@ export interface GlobalResponse {
     cvdResultCode: string;
     // avs
     avsResultCode: string;
+    iTDResponse: string;
     // status check
     statusCode: string;
     statusMessage: string;
@@ -170,6 +191,15 @@ export interface GlobalResponse {
     expAvsStreetNumber: string;
     expAvsStreetName: string;
     expAvsZipCode: string;
+    // batch close
+    ecrNo: string;
+    terminalIds: string;
+    purchaseCount: string;
+    purchaseAmount: string;
+    refundCount: string;
+    refundAmount: string;
+    correctionCount: string;
+    correctionAmount: string;
 }
 
 /* for all transactions this is the base response */

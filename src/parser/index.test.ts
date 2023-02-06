@@ -1,10 +1,4 @@
-import {
-    Crypt,
-    CVDIndicator,
-    PaymentIndicator,
-    PaymentInformation,
-    Transaction,
-} from "../index.js";
+import { Crypt, Transaction } from "../index.js";
 import { parseArguments } from "./index.js";
 
 describe("Testing the argument parser", () => {
@@ -29,7 +23,7 @@ describe("Testing the argument parser", () => {
                 expdate: "1234",
                 cryptType: Crypt.SslEnabled,
                 test: "bar",
-            });
+            } as any);
             expect(parsed).to.deep.equal({
                 type: Transaction.Purchase,
                 orderId: "123",
@@ -51,54 +45,5 @@ describe("Testing the argument parser", () => {
             } as any);
             expect(parsed).to.not.have.property("foo");
         });
-        // it("should remove additional fields to the avs, cof, and cvd properties", () => {
-        //     const parsed = parseArguments({
-        //         type: Transaction.Purchase,
-        //         orderId: "123",
-        //         amount: "1.00",
-        //         pan: "1234567890123456",
-        //         expdate: "1234",
-        //         cryptType: Crypt.SslEnabled,
-        //         avs: {
-        //             streetNumber: "123",
-        //             streetName: "foo",
-        //             zipCode: "12345",
-        //             foo: "bar",
-        //         } as any,
-        //         cvdInfo: {
-        //             cvdIndicator: CVDIndicator.Present,
-        //             cvdValue: "123",
-        //             foo: "bar",
-        //         } as any,
-        //         cof: {
-        //             paymentIndicator: PaymentIndicator.Recurring,
-        //             paymentInformation: PaymentInformation.FirstInSeries,
-        //             issuerId: "11231",
-        //             foo: "bar",
-        //         } as any,
-        //     });
-        //     expect(parsed).to.deep.equal({
-        //         type: Transaction.Purchase,
-        //         orderId: "123",
-        //         amount: "1.00",
-        //         pan: "1234567890123456",
-        //         expdate: "1234",
-        //         cryptType: Crypt.SslEnabled,
-        //         avs: {
-        //             streetNumber: "123",
-        //             streetName: "foo",
-        //             zipCode: "12345",
-        //         },
-        //         cvdInfo: {
-        //             cvdIndicator: CVDIndicator.Present,
-        //             cvdValue: "123",
-        //         },
-        //         cof: {
-        //             paymentIndicator: PaymentIndicator.Recurring,
-        //             paymentInformation: PaymentInformation.FirstInSeries,
-        //             issuerId: "11231",
-        //         },
-        //     });
-        // });
     });
 });

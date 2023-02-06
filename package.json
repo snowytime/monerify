@@ -1,5 +1,5 @@
 {
-    "name": "@snowytime/package-name",
+    "name": "@snowytime/monerify",
     "version": "0.0.0",
     "description": "",
     "type": "module",
@@ -11,18 +11,18 @@
         "build:types:esm": "tsc -p ./tsconfig.mjs.json",
         "build:types": "tsc -p ./tsconfig.mjs.json && tsc -p ./tsconfig.cjs.json",
         "build": "npm run build:raw && npm run build:types && sh finalize.sh",
-        "release:patch": "npm run test && npm run build && git add . && git commit -m '⚡️ auto patch' && git push origin master && npm version patch && npm publish"
+        "release:patch": "npm run test && npm run test:integration && npm run build && git add . && git commit -m '⚡️ auto patch' && git push origin master && npm version patch && npm publish"
     },
     "keywords": [],
     "author": "snowytime",
     "license": "MIT",
-    "homepage": "https://snowy.sh/packages/fns",
+    "homepage": "https://snowy.sh/packages/monerify",
     "bugs": {
-        "url": "https://github.com/snowytime/fns/issues"
+        "url": "https://github.com/snowytime/monerify/issues"
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/snowytime/fns.git"
+        "url": "https://github.com/snowytime/monerify.git"
     },
     "devDependencies": {
         "@snowytime/standards": "^0.0.8",

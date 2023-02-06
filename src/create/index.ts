@@ -1,18 +1,22 @@
 import { toSnakeCase } from "@snowytime/fns";
 import { builder } from "@snowytime/xanax";
-import { Endpoint, env, TransactionRequest } from "../index.js";
+import { Config, Endpoint, env, TransactionRequest } from "../index.js";
 import { parseArguments } from "../parser/index.js";
 
-export const createRequest = (args: TransactionRequest) => {
+type Arguments = TransactionRequest & Config;
+export const createRequest = (args: Arguments) => {
     const { type, ...rest } = parseArguments(args);
+    // we allow for the storeId, apiToken, and mode to be passed in as a config
+    const storeId = args.storeId || env.MONERIS_STORE_ID;
+    const apiToken = args.apiToken || env.MONERIS_API_TOKEN;
+    const mode = args.mode || env.MONERIS_MODE;
     // we need to grab our env variables
-    const mode = env.MONERIS_MODE;
     // construct the ol xml
     const body = builder({
         tree: {
             request: {
-                storeId: env.MONERIS_STORE_ID,
-                apiToken: env.MONERIS_API_TOKEN,
+                storeId,
+                apiToken,
                 // we want to add the statusCheck property if it exists and is true
                 // for some types the status check does not exists so we need a type guard
                 ...("statusCheck" in rest ? { statusCheck: rest.statusCheck } : {}),
