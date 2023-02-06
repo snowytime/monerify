@@ -9,12 +9,16 @@ import {
     PurchaseResponse,
     PaymentIndicator,
     PaymentInformation,
+    env,
 } from "../../../src/index.js";
 
 describe("Purchase integration", async () => {
     it("should send a successful purchase to the moneris api", async () => {
         const orderId = nanoid();
         const { body, url } = createRequest({
+            storeId: env.MONERIS_STORE_ID,
+            apiToken: env.MONERIS_API_TOKEN,
+            mode: env.MONERIS_MODE as "development",
             type: Transaction.Purchase,
             orderId,
             amount: "1.00",

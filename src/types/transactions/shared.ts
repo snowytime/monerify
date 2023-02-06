@@ -7,9 +7,9 @@ import {
 } from "../enums.js";
 
 export interface Config {
-    storeId?: string;
-    apiToken?: string;
-    mode?: "production" | "development";
+    storeId: string;
+    apiToken: string;
+    mode: "production" | "development";
 }
 
 export interface Avs {
