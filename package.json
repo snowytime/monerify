@@ -1,5 +1,6 @@
 {
     "name": "@snowytime/monerify",
+    "sideEffects": false,
     "type": "module",
     "version": "1.0.3",
     "description": "",
